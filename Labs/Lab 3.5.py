@@ -13,6 +13,6 @@ def funkcję_prostokat(a, b):
         "pole": pole,
         "obwod": obwod
     }
-    return wynik.items()
+    return wynik
 
 print (funkcję_prostokat(4,8))
