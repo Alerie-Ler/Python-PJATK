@@ -15,4 +15,7 @@ def funkcję_prostokat(a, b):
     }
     return wynik
 
-print (funkcję_prostokat(4,8))
+a=int(input("a="))
+b=int(input("b-"))
+wynik = funkcję_prostokat(a, b)
+print(wynik)
