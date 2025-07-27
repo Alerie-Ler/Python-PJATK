@@ -1,0 +1,7 @@
+tekst = input("Podaj text: ")
+
+def formatuj(tekst):
+    tekst=tekst.strip().lower().replace("python","PYTHON")
+    print(tekst)
+
+formatuj(tekst)
