@@ -1,3 +1,12 @@
+'''
+Napisz program, który analizuje komentarze z ankiety:
+
+Wczytaj od użytkownika 3 komentarze tekstowe (np. opinie o zajęciach) i umieść je w liście.
+Rozbij każdy komentarz na słowa i utwórz set zawierający wszystkie unikalne słowa ze wszystkich komentarzy.
+Wypisz liczbę unikalnych słów oraz te, które mają więcej niż 5 liter.
+Jeśli wśród komentarzy pojawi się słowo „Python”, wypisz komunikat: „Uczestnicy lubią Pythona!”.
+'''
+
 lista = []
 for _ in range(3):
     kom = input("Dodaj komentarz").strip()
