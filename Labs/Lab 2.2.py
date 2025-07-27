@@ -11,9 +11,10 @@ for komentarz in lista:
     unikalne.update(slowo)
     
 print(", ".join(unikalne))
+print(f"Ilisc unikalny {len(unikalne)}")
 
-dlugie = {chujnia for chujnia in unikalne if len(chujnia) > 5}
-print(", ".join(dlugie))
+dlugie = {k for k in unikalne if len(k) > 5}
+print("Ilosc unikalnych, które mają więcej niż 5 liter: ", ", ".join(dlugie))
 
 if "Python" in unikalne:
     print("Uczestnicy lubią Pythona!")
