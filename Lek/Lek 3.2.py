@@ -9,13 +9,13 @@ Napisz program, który:
     a: 3
     b: 1
     c: 5
-'''
 
+'''
 texst=input("Podaj dowolny takst")
 print(texst.strip().strip(" ,.:;"))
 
 licznik = {}
-for litera in tekst
+for litera in texst:
     if litera.isalpha():
         if litera in licznik:
             licznik[litera]+=1
