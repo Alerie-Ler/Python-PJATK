@@ -1,4 +1,14 @@
 '''
+W Multikinie bilety kosztują:
+
+    bilet normalny: 30 zł,
+    bilet studencki: 20 zł,
+    bilet dla seniora (od 65 lat): 15 zł.
+
+Dzieci do 4 lat mają wstęp za darmo. dodatkowo:
+
+    W środy wszystkie bilety są tańsze o 5 zł, z wyjątkiem biletów darmowych.
+
 Twoje zadanie:
 
     Zapytaj użytkownika o wiek,
