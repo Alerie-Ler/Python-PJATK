@@ -12,9 +12,4 @@ c=int(input ("Jaka jest temperatura w stopniach Celsjusza "))
 F=c*9/5+32
 print (c, '°C to jest', F, '°F')
 
-r=2025
-wiek=int(input("Jaki twoj rok urodzenia?"))
-if wiek<=2007:
-    print ("Jesteś pełnoletni")
-else:
-	print("Jesteś niepełnoletni")
+
