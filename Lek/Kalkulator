@@ -1,0 +1,52 @@
+
+def wwod():
+    text = (input().strip().split())
+    lista = list(text)
+    lista[0] = float(lista[0])
+    lista[2] = float(lista[2])
+    return lista
+
+def dodaj(a, b):
+    rezult = a + b
+    return rezult
+
+def odejmij(a, b):
+    rezult = a - b
+    return rezult
+
+def pomnoz(a, b):
+    rezult = a * b
+    return rezult
+
+def podziel(a, b):
+    if b == 0:
+        rezult = a / b
+        return rezult
+    else:
+        print ("Nimozliwo dinenie na 0. Podaj iny dilnyk")
+
+def potega(a, b):
+    rezult = a ** b
+    return rezult
+
+def main():
+    print("Welcome to Kalkulator \nPodaj wyrażenie do obliczenia, np. 2 * 7")
+    lista = wwod()
+    x = lista[1]
+    match x:
+        case '+':
+            wynik=dodaj(lista[0], lista[2])
+        case '*':
+            wynik=pomnoz(lista[0], lista[2])
+        case '-':
+            wynik=odejmij(lista[0], lista[2])
+        case '/':
+            wynik=podziel(lista[0], lista[2])
+        case '^':
+            wynik=potega(lista[0], lista[2])
+        case _:
+            print("Blad")
+    print(wynik)
+
+if __name__ == "__main__":
+    main()
