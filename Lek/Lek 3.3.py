@@ -1,24 +1,21 @@
 '''
 Napisz program, który:
 
-    wczyta od użytkownika dowolny tekst,
-    usunie z niego spacje i znaki interpunkcyjne,
-    policzy, ile razy występuje każda litera (bez rozróżniania wielkości liter),
-    wypisze wynik w formie:
+    wczyta zdanie od użytkownika,
+    rozbije je na słowa (split()),
+    zbuduje słownik, w którym kluczem jest słowo, a wartością liczba jego wystąpień,
+    wypisze wszystkie słowa w kolejności alfabetycznej z ich licznością.
 
-    a: 3
-    b: 1
-    c: 5
 
 '''
-texst=input("Podaj dowolny takst")
-print(texst.strip().strip(" ,.:;"))
-
-licznik = {}
-for litera in texst:
+text=input("Podaj dowolny text")
+tekst1 = text.split()
+print(tekst1)
+a={}
+for litera in tekst1:
     if litera.isalpha():
-        if litera in licznik:
-            licznik[litera]+=1
+        if litera in a:
+            a[litera] += 1
         else:
-            licznik[litera]=1
-print(licznik)
+            a[litera]=1
+print(a)
