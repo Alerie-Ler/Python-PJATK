@@ -1,7 +1,10 @@
+history = []
 
 def wwod():
     text = (input().strip().split())
     lista = list(text)
+    if len(lista) != 3:
+        print("Podaj przez spase")
     lista[0] = float(lista[0])
     lista[2] = float(lista[2])
     return lista
@@ -28,9 +31,19 @@ def podziel(a, b):
 def potega(a, b):
     rezult = a ** b
     return rezult
-
-def main():
-    print("Welcome to Kalkulator \nPodaj wyrażenie do obliczenia, np. 2 * 7")
+    
+def pokaz_historie():
+    if not history: 
+        print("Niema historii")
+    else:
+        print("Historia operacij\n")
+        for zapis in history:
+            print(history)
+            
+def clean_history():
+    history.clear()
+    
+def obliczenie():
     lista = wwod()
     x = lista[1]
     match x:
@@ -46,7 +59,29 @@ def main():
             wynik=potega(lista[0], lista[2])
         case _:
             print("Blad")
-    print(wynik)
+    print("Wynik: ",wynik)
+    his = lista() + "=" + wynik
+    history.append(his)
+    return wynik
 
+def main():
+    print("Welcome to Kalkulator \nPodaj wyrażenie do obliczenia, np. 2 * 7")
+    print("Komandy: \nexit lub quit - wyjscie z kalkukatora \nhistoria = pokazac historie obliczen \nclear - usun historie")
+    print("------------------------------------------")
+    
+    while True:
+        wybor=input("--- ").strip().lower()
+        if wybor in ("exit", "quit"):
+            print ("Sema")
+            break
+        elif wybor in ("historia"):
+            pokaz_historie()
+        elif wybor in ("clear"):
+            clean_history()
+        elif not wybor:
+            continue
+        else:
+            obliczenie():
+            
 if __name__ == "__main__":
     main()
