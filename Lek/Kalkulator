@@ -5,6 +5,7 @@ def wwod():
     lista = list(text)
     if len(lista) != 3:
         print("Podaj przez spase")
+        return None
     lista[0] = float(lista[0])
     lista[2] = float(lista[2])
     return lista
@@ -23,56 +24,67 @@ def pomnoz(a, b):
 
 def podziel(a, b):
     if b == 0:
-        rezult = a / b
-        return rezult
+        print("Niemożliwe dzielenie przez 0")
+        return None
     else:
-        print ("Nimozliwo dinenie na 0. Podaj iny dilnyk")
+        return a / b
 
 def potega(a, b):
     rezult = a ** b
     return rezult
-    
+
 def pokaz_historie():
-    if not history: 
+    if not history:
         print("Niema historii")
     else:
         print("Historia operacij\n")
         for zapis in history:
-            print(history)
-            
+            print(zapis)
+
+
 def clean_history():
     history.clear()
-    
+
+
 def obliczenie():
     lista = wwod()
+    if lista is None:
+        return
     x = lista[1]
     match x:
         case '+':
-            wynik=dodaj(lista[0], lista[2])
+            wynik = dodaj(lista[0], lista[2])
         case '*':
-            wynik=pomnoz(lista[0], lista[2])
+            wynik = pomnoz(lista[0], lista[2])
         case '-':
-            wynik=odejmij(lista[0], lista[2])
+            wynik = odejmij(lista[0], lista[2])
         case '/':
-            wynik=podziel(lista[0], lista[2])
+            wynik = podziel(lista[0], lista[2])
         case '^':
-            wynik=potega(lista[0], lista[2])
+            wynik = potega(lista[0], lista[2])
         case _:
-            print("Blad")
-    print("Wynik: ",wynik)
-    his = lista() + "=" + wynik
+            print("Błąd: nieznany operator")
+            return
+
+    if wynik is None:
+        return
+
+    print("Wynik:", wynik)
+    his = f"{lista[0]} {lista[1]} {lista[2]} = {wynik}"
     history.append(his)
     return wynik
 
+
 def main():
     print("Welcome to Kalkulator \nPodaj wyrażenie do obliczenia, np. 2 * 7")
-    print("Komandy: \nexit lub quit - wyjscie z kalkukatora \nhistoria = pokazac historie obliczen \nclear - usun historie")
-    print("------------------------------------------")
-    
+    print(
+        "Komandy: \nexit lub quit - wyjscie z kalkukatora \nhistoria = pokazac historie obliczen \nclear - usun historie")
+    print("------------------------")
+
     while True:
-        wybor=input("--- ").strip().lower()
+        wybor = input("--- ").strip().lower()
         if wybor in ("exit", "quit"):
-            print ("Sema")
+            print("Goodby")
             break
         elif wybor in ("historia"):
             pokaz_historie()
@@ -81,7 +93,8 @@ def main():
         elif not wybor:
             continue
         else:
-            obliczenie():
-            
+            obliczenie()
+
+
 if __name__ == "__main__":
     main()
