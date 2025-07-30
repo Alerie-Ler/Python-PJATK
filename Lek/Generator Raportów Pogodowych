@@ -1,0 +1,31 @@
+import random
+
+pogoda = []
+
+def add_pogoda(pogoda):
+    while True:
+        miasto = input("Podaj miasto: ").strip().lower()
+        if miasto == "stop":
+            break
+        tempa = int(input("Podaj temperaturę "))
+        tupla = (miasto, tempa)
+        pogoda.append(tupla)
+        print("Informacjz została nadana.")
+
+def generuj_prognoze(miasto):
+    pass
+
+def pokaz_prognozy(lista_miast):
+    pass
+
+def main():
+
+    print("Welcome to Generatora Raportów Pogodowych \nPodaj miasto oraz temperaturę")
+    print("Komandy: ")
+    temp_prog= random.randint(-101, 35)
+    warunki = ["Słonecznie", "Deszczowo", "Zachmurzenie"]
+    for prognoza in pogoda:
+        
+
+if __name__ == "__main__":
+    main()
