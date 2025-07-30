@@ -26,7 +26,7 @@ def complete_task(to_do_list):
     show_list(to_do_list)
     try:
         index = int(input("Podaj numer zadania dla  oznaczania zadania jako ✔ wykonane: "))
-        if index < 1 or index > len(to_do_list):
+        if index >= 1 and index <= len(to_do_list):
             to_do_list[index - 1]["Zroboine"] = True
             print(f"Zadanie {to_do_list[index - 1]['title']} markowane jako zrobione")
         else:
@@ -57,9 +57,10 @@ def save_task(to_do_list):
 
 def load_task(to_do_list):
     try:
-        s = open("to_do_list.txt", "r")
-        s.read()
-        s.close()
+        with open("to_do_list.txt", "r") as file:
+            loadList = file.readlines()
+            to_do_list.clear()
+            to_do_list.extend(loadList)
         print("To Do list loaded from to_do_list.txt")
     except FileNotFoundError:
         print("Error")
