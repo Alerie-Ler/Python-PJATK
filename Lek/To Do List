@@ -1,0 +1,108 @@
+to_do_list = []
+
+def add_task(to_do_list):
+    while True:
+        title = input("Podaj zadanie (lub wpisz 'stop', aby zakończyć): ").strip().lower()
+        if title == "stop":
+            break
+        priorytet = input("Podaj priorytet: wysoki/średni/niski ").strip().lower()
+        if priorytet not in ("wysoki", "średni", "niski"):
+                print("Nieprawidlowo podanyj priorytet")
+                continue
+        tupla = (title, priorytet)
+        to_do_list.append(tupla)
+        print("Zadanie zostało dodane.")
+
+
+def show_list(to_do_list):
+    if not to_do_list:
+        print("To Do list pusty")
+        return
+    for idx, task in enumerate(to_do_list,1):
+        status = "✓" if task["Zroboine"] else " "
+        print(f"{idx}. [{status}] Task: {task['title']}, Priority: {task['priorytet']}")
+
+def complete_task(to_do_list):
+    show_list(to_do_list)
+    try:
+        index = int(input("Podaj numer zadania dla  oznaczania zadania jako ✔ wykonane: "))
+        if index < 1 or index > len(to_do_list):
+            to_do_list[index - 1]["Zroboine"] = True
+            print(f"Zadanie {to_do_list[index - 1]['title']} markowane jako zrobione")
+        else:
+            print("Nieprawidlowy numer")
+    except ValueError:
+        print("Podaj prawidlowy numer")
+
+def delete_task(to_do_list):
+    show_list(to_do_list)
+    try:
+        index = int(input("Podaj numer zadania dla  usunientia: "))
+        if index >= 1 and index <= len(to_do_list):
+            task = to_do_list.pop(index-1)
+            print("Zdanie usuniente")
+        else:
+            print("Nieprawidlowy numer")
+    except ValueError:
+        print("Podaj prawidlowy numer")
+
+def save_task(to_do_list):
+    try:
+        s = open("to_do_list.txt", "w")
+        s.write(str(to_do_list))
+        s.close()
+        print("To Do list saved to to_do_list.txt")
+    except FileNotFoundError:
+        print("Error")
+
+def load_task(to_do_list):
+    try:
+        s = open("to_do_list.txt", "r")
+        s.read()
+        s.close()
+        print("To Do list loaded from to_do_list.txt")
+    except FileNotFoundError:
+        print("Error")
+
+def main():
+
+    print("Welcome to To Do list \nPodaj tytuł zadania i go priorytet")
+    print("Komandy: ")
+    print("add   - dodaj zadanie")
+    print("list  - wyświetl listę zadań")
+    print("mark  - markowanie wykonania zadań")
+    print("delete  - usuwanie zadania")
+    print("clear - usuń wszystkie zadania")
+    print("save - zapis zadania do pliku")
+    print("load - wczytaj istniejące zadania")
+    print("exit lub quit - wyjście")
+    print("------------------------")
+
+    while True:
+        text = input().strip().lower()
+        if not text:
+            continue
+
+        if text in ("exit", "quit"):
+            print("Goodbye")
+            break
+        elif text == "clear":
+            to_do_list.clear()
+            print("Lista zadań została wyczyszczona.")
+        elif text == "list":
+            show_list(to_do_list)
+        elif text == "mark":
+            complete_task(to_do_list)
+        elif text == "save":
+            save_task(to_do_list)
+        elif text == "load":
+            load_task(to_do_list)
+        elif text == "delete":
+            delete_task(to_do_list)
+        elif text == "add":
+            add_task(to_do_list)
+        else:
+            print("Nieznana komenda. Spróbuj ponownie.")
+
+if __name__ == "__main__":
+    main()
