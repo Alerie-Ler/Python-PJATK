@@ -1,0 +1,33 @@
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def root():
+    return {"message": "Hello World"}
+
+@app.get("/hello")
+def root(name):
+    return {"message": f"Hello {name}"}
+
+@app.get("/sum")
+def root(x: int, y: int):
+    return {"rezult": x+y}
+
+@app.get("/calc")
+def root(x: int, y: int, op: str="add" ):
+    c = op
+    match c:
+        case "add":
+            return {"rezult": x + y}
+        case "sub":
+            return {"rezult": x - y}
+        case "mul":
+            return {"rezult": x * y}
+        case "div":
+            if y != 0:
+                return {"rezult": x / y}
+            else:
+                return {"error": "Błąd: dzielenie przez zero"}
+        case _:
+            return {"error": "Nieznana operacja"}
