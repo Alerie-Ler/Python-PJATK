@@ -7,25 +7,39 @@ def add_pogoda(pogoda):
         miasto = input("Podaj miasto: ").strip().lower()
         if miasto == "stop":
             break
-        tempa = int(input("Podaj temperaturę "))
+        try:
+            tempa = int(input("Podaj temperaturę (°C): "))
+        except ValueError:
+            print("Temperatura musi być liczbą całkowitą.")
+            continue
         tupla = (miasto, tempa)
         pogoda.append(tupla)
         print("Informacjz została nadana.")
 
 def generuj_prognoze(miasto):
-    pass
+    temp_prog = random.randint(-10, 35)
+    warunki_pogody = ["Słonecznie", "Deszczowo", "Zachmurzenie"]
+    warunki = random.choice(warunki_pogody)
+    return (miasto.title(), temp_prog, warunki)
 
 def pokaz_prognozy(lista_miast):
-    pass
+    print("Wprowadzone prognozy")
+    print(f"{'Miasto':<20} {'Temperatura':<15}")
+    for miasto, temp in lista_miast:
+        print(f"{miasto.title():<20} {str(temp) + '°C':<15}")
+    print("-------------------------------------")
+    print("Losowe prognozy")
+    print(f"{'Miasto':<20} {'Temp':<10} {'Warunki'}")
+    for miasto, _ in lista_miast:
+        m, t, w = generuj_prognoze(miasto)
+        print(f"{m:<20} {str(t) + '°C':<10} {w}")
 
 def main():
 
-    print("Welcome to Generatora Raportów Pogodowych \nPodaj miasto oraz temperaturę")
-    print("Komandy: ")
-    temp_prog= random.randint(-101, 35)
-    warunki = ["Słonecznie", "Deszczowo", "Zachmurzenie"]
-    for prognoza in pogoda:
-        
+    print("Welcome to Generatora Raportów Pogodowych")
+    print("Wpisz kolejne miasta i temperatury lub 'stop' aby zakończyć")
+    add_pogoda(pogoda)
+    pokaz_prognozy(pogoda)
 
 if __name__ == "__main__":
     main()
