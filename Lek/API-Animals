@@ -1,0 +1,69 @@
+from fastapi import FastAPI, HTTPException
+
+from pydantic import BaseModel
+
+class Animal(BaseModel):
+    name: str
+    species: str
+    age: int
+
+class AnimalNameUpdate(BaseModel):
+    name: str
+
+animals = [
+    {"id": 1, "name": "Burek", "species": "dog", "age": 5},
+    {"id": 2, "name": "Mruczek", "species": "cat", "age": 3},
+    {"id": 3, "name": "Mara", "species": "rat", "age": 1},
+    {"id": 4, "name": "Kocik", "species": "cat", "age": 7},
+    {"id": 5, "name": "Lala", "species": "spider", "age": 4}
+]
+
+app = FastAPI()
+
+@app.get("/ping")
+def ping():
+    return {"message": "API is working"}
+
+@app.get("/animals")
+def get_all_animals():
+    return animals
+
+
+@app.get("/animals/{animal_id}")
+def get_animal(animal_id: int):
+    for animal in animals:
+        if animal["id"] == animal_id:
+            return animal
+    raise HTTPException(status_code=404, detail="animal not found")
+
+@app.post("/animals")
+def create_animal(animal: Animal):
+    if animals:
+        new_id = animals[-1]["id"] + 1
+    else:
+        new_id = 1
+    new_animal = {
+        "id": new_id,
+        "name": animal.name,
+        "species": animal.species,
+        "age": animal.age,
+    }
+    animals.append(new_animal)
+    return animals
+
+@app.delete("/animals/{animal_id}")
+def delete_animal(animal_id: int):
+    for animal in animals:
+        if animal["id"] == animal_id:
+            animals.remove(animal)
+            return animal
+    raise HTTPException(status_code=404, detail="animal not found")
+
+@app.put("/animals/{animal_id}")
+def update_animal(animal_id: int, animal_update: AnimalNameUpdate):
+    for n in animals:
+        if n["id"] == animal_id:
+            n["name"] = animal_update.name
+            return n
+    raise HTTPException(status_code=404, detail="animal not found")
+
