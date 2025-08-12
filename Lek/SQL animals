@@ -1,0 +1,130 @@
+from fastapi import FastAPI, HTTPException
+
+from pydantic import BaseModel
+import sqlite3
+
+conn = sqlite3.connect("animals.db", check_same_thread=False)
+conn.row_factory = sqlite3.Row
+cur = conn.cursor()
+
+cur.execute("""CREATE TABLE IF NOT EXISTS animals (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    species TEXT NOT NULL,
+    age INTEGER NOT NULL,
+    UNIQUE(name, species)
+)""")
+class Animal(BaseModel):
+    name: str
+    species: str
+    age: int
+
+class AnimalNameUpdate(BaseModel):
+    name: str
+
+app = FastAPI()
+
+@app.get("/ping")
+def ping():
+    return {"message": "API is working"}
+
+@app.get("/animals")
+def get_all_animals():
+    cur.execute("SELECT * FROM animals")
+    list = []
+    for r in cur.fetchall():
+        list.append(r)
+    return list
+
+
+@app.get("/animals/{animal_id}")
+def get_animal(animal_id: int):
+    cur.execute("SELECT * FROM animals WHERE id = ?", (animal_id,))
+    row = cur.fetchone()
+    if row is None:
+        raise HTTPException(status_code=404, detail="animal not found")
+    return dict(row)
+
+@app.get("/animals/search")
+def search_animals(animal_name: str):
+    results = []
+    search_lower = animal_name.lower()
+    for animal in animals:
+        if search_lower in animal["name"].lower():
+            results.append(animal)
+    return results
+
+@app.post("/animals")
+def create_animal(animal: Animal):
+    cur.execute("INSERT INTO animals (name, species, age) VALUES (?, ?, ?)", (animal.name, animal.species, animal.age))
+    if cur.execute:
+        new_id = cur.execute[-1]["id"] + 1
+    else:
+        new_id = 1
+    new_animal = {
+        "id": new_id,
+        "name": animal.name,
+        "species": animal.species,
+        "age": animal.age,
+    }
+    cur.execute.append(new_animal)
+    return cur.execute
+
+@app.delete("/animals/{animal_id}")
+def delete_animal(animal_id: int):
+    for animal in animals:
+        if animal["id"] == animal_id:
+            animals.remove(animal)
+            return animal
+    raise HTTPException(status_code=404, detail="animal not found")
+
+@app.put("/animals/{animal_id}")
+def update_animal(animal_id: int, animal_update: AnimalNameUpdate):
+    cur.execute("UPDATE animals SET name = ? WHERE id = ?")
+    for n in animals:
+        if n["id"] == animal_id:
+            n["name"] = animal_update.name
+            return n
+    raise HTTPException(status_code=404, detail="animal not found")
+
+
+
+
+
+
+
+import sqlite3
+
+conn = sqlite3.connect("animals.db")
+conn.row_factory = sqlite3.Row
+cur = conn.cursor()
+
+
+cur.execute("""
+CREATE TABLE IF NOT EXISTS animals (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    species TEXT NOT NULL,
+    age INTEGER NOT NULL,
+    UNIQUE(name, species)
+)
+""")
+
+cur.execute("SELECT * FROM animals")
+for row in cur.fetchall():
+    print(dict(row))
+
+cur.execute("SELECT * FROM animals WHERE id = ?", "3")
+print(cur.fetchone())
+
+if row is None:
+    print(f"Nie znaleziono rekordu o id = {3}")
+else:
+    print("Znaleziony rekord:", dict(row))
+
+cur.execute("INSERT INTO animals (name, species, age) VALUES (?, ?, ?)", ("Pau", "kot", 7))
+conn.commit()
+
+conn.close()
+
+
